@@ -24,34 +24,34 @@ const GET_COLLECTION = gql`
   }
 `;
 
-// mutation
-const SET_COLLECTION = gql`
-  mutation ($category: Category!) {
-    addCategory(category: $category) {
-      id
-      title
-      items {
-        id
-        name
-        price
-        imageUrl
-      }
-    }
-  }
-`;
+// // mutation
+// const SET_COLLECTION = gql`
+//   mutation ($category: Category!) {
+//     addCategory(category: $category) {
+//       id
+//       title
+//       items {
+//         id
+//         name
+//         price
+//         imageUrl
+//       }
+//     }
+//   }
+// `;
 
 const Category = () => {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
 
-  // const { loading, error, data } = useQuery(GET_COLLECTION, {
-  //   variables: {
-  //     title: category,
-  //   },
-  // });
+  const { loading, error, data } = useQuery(GET_COLLECTION, {
+    variables: {
+      title: category,
+    },
+  });
 
-  const [addCategory, { loading, error, data }] = useMutation(SET_COLLECTION);
-  addCategory({ variables: { category: cateogyObjectYouWantMutated } });
+  // const [addCategory, { loading, error, data }] = useMutation(SET_COLLECTION);
+  // addCategory({ variables: { category: cateogyObjectYouWantMutated } });
 
   // console.log(data);
   useEffect(() => {
