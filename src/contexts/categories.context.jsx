@@ -29,7 +29,7 @@ export const CategoriesProvider = ({ children }) => {
   const [categoriesMap, setCategoriesMap] = useState({});
 
   console.log("loading", loading);
-  console.log("data", data);
+  // console.log("data", data);
 
   // useEffect(() => {
   //   const getCategoriesMap = async () => {
@@ -40,7 +40,20 @@ export const CategoriesProvider = ({ children }) => {
   //   getCategoriesMap();
   // }, []);
 
-  const value = { categoriesMap };
+  useEffect(() => {
+    if (data) {
+      const { collections } = data;
+      const collectionsMap = collections.reduce((acc, collection) => {
+        const { title, items } = collection;
+        acc[title.toLowerCase()] = items;
+        return acc;
+      }, {});
+
+      setCategoriesMap(collectionsMap);
+    }
+  }, [data]);
+
+  const value = { categoriesMap, loading };
   return (
     <CategoriesContext.Provider value={value}>
       {children}
